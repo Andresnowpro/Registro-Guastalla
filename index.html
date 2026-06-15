@@ -8,7 +8,42 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 </head>
 <body>
-  <div class="app">
+
+  <!-- ── LOGIN SCREEN ── -->
+  <div id="login-screen">
+    <div class="login-card">
+      <img class="login-logo" src="https://www.guastalla.org/images/logo_guastalla.png" onerror="this.style.display='none'" alt="Logo Guastalla">
+      <div class="login-school">Collegio della Guastalla</div>
+      <div class="login-sub">Registro Elettronico · Monza</div>
+
+      <div id="login-error" class="login-error" style="display:none">
+        <i class="ti ti-alert-circle"></i> Username o password errati
+      </div>
+
+      <div class="form-col" style="margin-top:24px">
+        <div class="input-wrap">
+          <i class="ti ti-user input-icon"></i>
+          <input id="usr" type="text" placeholder="Username" autocomplete="username">
+        </div>
+        <div class="input-wrap">
+          <i class="ti ti-lock input-icon"></i>
+          <input id="pwd" type="password" placeholder="Password" autocomplete="current-password">
+        </div>
+        <button class="btn-login" onclick="doLogin()">
+          Accedi <i class="ti ti-arrow-right"></i>
+        </button>
+      </div>
+
+      <div class="login-hint">
+        <strong>Credenziali demo:</strong><br>
+        studente / studente1234 &nbsp;·&nbsp; genitore / genitore1234<br>
+        docente / docente1234 &nbsp;·&nbsp; rettore / rettore1234
+      </div>
+    </div>
+  </div>
+
+  <!-- ── APP ── -->
+  <div id="app" style="display:none">
     <div class="topbar">
       <div class="logo-wrap">
         <img class="logo-img" src="https://www.guastalla.org/images/logo_guastalla.png" onerror="this.style.display='none'" alt="Logo Guastalla">
@@ -17,24 +52,204 @@
           <div class="school-sub">Registro Elettronico — Monza</div>
         </div>
       </div>
-      <div class="role-pills">
-        <div class="pill active" onclick="setRole('studente', this)">Studente</div>
-        <div class="pill" onclick="setRole('genitore', this)">Genitore</div>
-        <div class="pill" onclick="setRole('docente', this)">Docente</div>
-        <div class="pill" onclick="setRole('rettore', this)">Rettore</div>
+      <div class="topbar-right">
+        <span id="topbar-role-badge" class="role-badge"></span>
+        <button class="btn-logout" onclick="doLogout()">
+          <i class="ti ti-logout"></i> Esci
+        </button>
       </div>
     </div>
 
     <div class="content">
 
       <!-- STUDENTE -->
-      <div id="view-studente" class="section-view active">
+      <div id="view-studente" class="section-view">
         <div class="welcome">
           <h1>Buongiorno, Marco</h1>
           <p>Classe 3ª A · Liceo Scientifico · Anno scolastico 2025/2026</p>
         </div>
         <div class="stat-row">
           <div class="stat-card"><div class="stat-label">Media generale</div><div class="stat-value">7.8</div><div class="stat-sub">+0.3 rispetto a ottobre</div></div>
+          <div class="stat-card"><div class="stat-label">Assenze</div><div class="stat-value">4</div><div class="stat-sub">3 giustificate</div></div>
+          <div class="stat-card"><div class="stat-label">Compiti in scadenza</div><div class="stat-value">3</div><div class="stat-sub">1 entro domani</div></div>
+          <div class="stat-card"><div class="stat-label">Voti questo mese</div><div class="stat-value">9</div><div class="stat-sub">5 materie valutate</div></div>
+        </div>
+        <div class="grid2">
+          <div class="card">
+            <div class="card-title"><i class="ti ti-school" aria-hidden="true"></i> Ultimi voti</div>
+            <div class="voto-row"><div><div class="materia">Matematica</div><div class="data">12 giu 2026</div></div><div class="voto-badge v-high">8</div></div>
+            <div class="voto-row"><div><div class="materia">Latino</div><div class="data">10 giu 2026</div></div><div class="voto-badge v-mid">6.5</div></div>
+            <div class="voto-row"><div><div class="materia">Fisica</div><div class="data">9 giu 2026</div></div><div class="voto-badge v-high">9</div></div>
+            <div class="voto-row"><div><div class="materia">Italiano</div><div class="data">5 giu 2026</div></div><div class="voto-badge v-low">5.5</div></div>
+            <div class="voto-row"><div><div class="materia">Storia</div><div class="data">3 giu 2026</div></div><div class="voto-badge v-high">7.5</div></div>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="ti ti-calendar" aria-hidden="true"></i> Presenze</div>
+            <div class="assenza-row"><div class="assenza-dot dot-red"></div><div class="assenza-info"><div class="assenza-tipo">Assenza intera giornata</div><div class="assenza-data">3 giu 2026</div></div><div class="badge-giust">Giustificata</div></div>
+            <div class="assenza-row"><div class="assenza-dot dot-amber"></div><div class="assenza-info"><div class="assenza-tipo">Ritardo 1ª ora</div><div class="assenza-data">28 mag 2026</div></div><div class="badge-giust">Giustificato</div></div>
+            <div class="assenza-row"><div class="assenza-dot dot-red"></div><div class="assenza-info"><div class="assenza-tipo">Assenza intera giornata</div><div class="assenza-data">15 mag 2026</div></div><div class="badge-giust">Giustificata</div></div>
+            <div class="assenza-row"><div class="assenza-dot dot-red"></div><div class="assenza-info"><div class="assenza-tipo">Assenza intera giornata</div><div class="assenza-data">2 mag 2026</div></div><div class="badge-ng">Da giustificare</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title"><i class="ti ti-book" aria-hidden="true"></i> Compiti assegnati</div>
+          <div class="compiti-grid">
+            <div class="compito-row"><div class="compito-mat">Matematica</div><div class="compito-desc">Esercizi pag. 234 n. 1–10</div><div class="compito-meta scad-near"><i class="ti ti-clock"></i> Domani, 16 giu</div></div>
+            <div class="compito-row"><div class="compito-mat">Latino</div><div class="compito-desc">Traduzione Cesare, De Bello</div><div class="compito-meta"><i class="ti ti-clock"></i> 19 giu 2026</div></div>
+            <div class="compito-row"><div class="compito-mat">Storia</div><div class="compito-desc">Riassunto capitolo 12</div><div class="compito-meta"><i class="ti ti-clock"></i> 22 giu 2026</div></div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <div class="card-title"><i class="ti ti-chart-bar" aria-hidden="true"></i> Media per materia</div>
+          <div class="media-bar">
+            <div class="media-subject"><span>Fisica</span><span class="media-val">8.8</span></div>
+            <div class="bar-wrap"><div class="bar-fill" style="width:88%;background:#1B2E5E"></div></div>
+            <div class="media-subject"><span>Matematica</span><span class="media-val">8.0</span></div>
+            <div class="bar-wrap"><div class="bar-fill" style="width:80%;background:#1B2E5E"></div></div>
+            <div class="media-subject"><span>Storia</span><span class="media-val">7.5</span></div>
+            <div class="bar-wrap"><div class="bar-fill" style="width:75%;background:#1B2E5E"></div></div>
+            <div class="media-subject"><span>Latino</span><span class="media-val">6.5</span></div>
+            <div class="bar-wrap"><div class="bar-fill" style="width:65%;background:#BA7517"></div></div>
+            <div class="media-subject"><span>Italiano</span><span class="media-val">5.5</span></div>
+            <div class="bar-wrap"><div class="bar-fill" style="width:55%;background:#E24B4A"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GENITORE -->
+      <div id="view-genitore" class="section-view">
+        <div class="welcome">
+          <h1>Buongiorno, Sig.ra Rossi</h1>
+          <p>Situazione di Marco Rossi · 3ª A Liceo Scientifico</p>
+        </div>
+        <div class="stat-row">
+          <div class="stat-card"><div class="stat-label">Media generale</div><div class="stat-value">7.8</div><div class="stat-sub">In miglioramento</div></div>
+          <div class="stat-card"><div class="stat-label">Assenze totali</div><div class="stat-value">4</div><div class="stat-sub">1 da giustificare</div></div>
+          <div class="stat-card"><div class="stat-label">Prossima verifica</div><div class="stat-value">19 giu</div><div class="stat-sub">Latino</div></div>
+          <div class="stat-card"><div class="stat-label">Comunicazioni</div><div class="stat-value">2</div><div class="stat-sub">Non lette</div></div>
+        </div>
+        <div class="grid2">
+          <div class="card">
+            <div class="card-title"><i class="ti ti-bell" aria-hidden="true"></i> Notifiche recenti</div>
+            <div class="notif-row"><div class="notif-icon ni-amber"><i class="ti ti-alert-triangle"></i></div><div class="notif-body"><div class="notif-title">Assenza da giustificare</div><div class="notif-sub">2 maggio · Giornata intera</div></div></div>
+            <div class="notif-row"><div class="notif-icon ni-blue"><i class="ti ti-clipboard-list"></i></div><div class="notif-body"><div class="notif-title">Nuovo voto in Matematica</div><div class="notif-sub">Voto: 8 · 12 giugno 2026</div></div></div>
+            <div class="notif-row"><div class="notif-icon ni-green"><i class="ti ti-mail"></i></div><div class="notif-body"><div class="notif-title">Comunicazione dalla scuola</div><div class="notif-sub">Riunione consigli di classe</div></div></div>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="ti ti-chart-line" aria-hidden="true"></i> Andamento voti</div>
+            <div class="media-bar">
+              <div class="media-subject"><span>Fisica</span><span class="media-val up">8.8 ↑</span></div>
+              <div class="bar-wrap"><div class="bar-fill" style="width:88%;background:#639922"></div></div>
+              <div class="media-subject"><span>Matematica</span><span class="media-val up">8.0 ↑</span></div>
+              <div class="bar-wrap"><div class="bar-fill" style="width:80%;background:#639922"></div></div>
+              <div class="media-subject"><span>Italiano</span><span class="media-val down">5.5 ↓</span></div>
+              <div class="bar-wrap"><div class="bar-fill" style="width:55%;background:#E24B4A"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="full-card">
+          <div class="card-title"><i class="ti ti-calendar-event" aria-hidden="true"></i> Calendario presenze — giugno 2026</div>
+          <div class="cal-grid" id="cal-grid"></div>
+          <div class="cal-legend">
+            <div class="leg-item"><div class="leg-dot" style="background:#FCEBEB;border:1px solid #F09595"></div>Assente</div>
+            <div class="leg-item"><div class="leg-dot" style="background:#EAF3DE;border:1px solid #97C459"></div>Giustificata</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DOCENTE -->
+      <div id="view-docente" class="section-view">
+        <div class="welcome">
+          <h1>Buongiorno, Prof. Bianchi</h1>
+          <p>Matematica e Fisica · Classi: 3ªA, 4ªB, 5ªA</p>
+        </div>
+        <div class="stat-row">
+          <div class="stat-card"><div class="stat-label">Ore oggi</div><div class="stat-value">4</div><div class="stat-sub">3ªA, 4ªB, 5ªA, 4ªB</div></div>
+          <div class="stat-card"><div class="stat-label">Voti da inserire</div><div class="stat-value">18</div><div class="stat-sub">Verifica del 12 giu</div></div>
+          <div class="stat-card"><div class="stat-label">Assenze oggi</div><div class="stat-value">3</div><div class="stat-sub">Su 72 presenti</div></div>
+          <div class="stat-card"><div class="stat-label">Media classe 3ªA</div><div class="stat-value">7.2</div><div class="stat-sub">Matematica</div></div>
+        </div>
+        <div class="full-card">
+          <div class="ins-header">
+            <div class="ins-title">Registro presenze — 3ªA · oggi 15 giu</div>
+            <button class="btn-add"><i class="ti ti-check"></i> Salva</button>
+          </div>
+          <div class="presenze-grid" id="presenze-grid"></div>
+        </div>
+        <div class="grid2">
+          <div class="card">
+            <div class="ins-header" style="margin-bottom:10px">
+              <div class="card-title" style="margin-bottom:0"><i class="ti ti-pencil" aria-hidden="true"></i> Inserisci voto</div>
+              <button class="btn-add"><i class="ti ti-plus"></i> Aggiungi</button>
+            </div>
+            <div class="form-col">
+              <select><option>3ªA — Matematica</option><option>4ªB — Fisica</option><option>5ªA — Matematica</option></select>
+              <select><option>Rossi Marco</option><option>Basso Andrea</option><option>Conti Martina</option></select>
+              <div class="form-row">
+                <input type="number" min="1" max="10" step="0.5" value="7" placeholder="Voto">
+                <select><option>Scritto</option><option>Orale</option><option>Pratico</option></select>
+              </div>
+              <input type="text" placeholder="Note (facoltativo)">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title"><i class="ti ti-clipboard-list" aria-hidden="true"></i> Assegna compito</div>
+            <div class="form-col">
+              <select><option>3ªA — Matematica</option><option>4ªB — Fisica</option></select>
+              <textarea placeholder="Descrizione compito..."></textarea>
+              <input type="date" value="2026-06-20">
+              <button class="btn-add btn-full"><i class="ti ti-send"></i> Pubblica compito</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RETTORE -->
+      <div id="view-rettore" class="section-view">
+        <div class="welcome">
+          <h1>Panoramica istituto</h1>
+          <p>Collegio della Guastalla · Anno scolastico 2025/2026</p>
+        </div>
+        <div class="stat-row">
+          <div class="stat-card"><div class="stat-label">Studenti totali</div><div class="stat-value">487</div><div class="stat-sub">Tutti i gradi</div></div>
+          <div class="stat-card"><div class="stat-label">Docenti</div><div class="stat-value">38</div><div class="stat-sub">Ruolo e supplenti</div></div>
+          <div class="stat-card"><div class="stat-label">Classi attive</div><div class="stat-value">21</div><div class="stat-sub">5 indirizzi</div></div>
+          <div class="stat-card"><div class="stat-label">Media istituto</div><div class="stat-value">7.4</div><div class="stat-sub">Tutti gli ordini</div></div>
+        </div>
+        <div class="grid2">
+          <div class="rettore-card">
+            <div class="card-title"><i class="ti ti-users" aria-hidden="true"></i> Docenti — riepilogo</div>
+            <div class="doc-row"><div class="avatar">GB</div><div class="doc-info"><div class="doc-nome">Prof. Bianchi G.</div><div class="doc-mat">Matematica · Fisica</div></div><div class="doc-stat">Media cl. 7.2</div></div>
+            <div class="doc-row"><div class="avatar">MF</div><div class="doc-info"><div class="doc-nome">Prof.ssa Ferrari M.</div><div class="doc-mat">Italiano · Latino</div></div><div class="doc-stat">Media cl. 7.0</div></div>
+            <div class="doc-row"><div class="avatar">RC</div><div class="doc-info"><div class="doc-nome">Prof. Colombo R.</div><div class="doc-mat">Storia · Filosofia</div></div><div class="doc-stat">Media cl. 7.5</div></div>
+            <div class="doc-row"><div class="avatar">SN</div><div class="doc-info"><div class="doc-nome">Prof.ssa Neri S.</div><div class="doc-mat">Scienze · Biologia</div></div><div class="doc-stat">Media cl. 7.8</div></div>
+          </div>
+          <div class="rettore-card">
+            <div class="card-title"><i class="ti ti-school" aria-hidden="true"></i> Classi per media</div>
+            <div class="progress-row"><div class="prog-header"><span>5ªA Liceo Scientifico</span><span>8.1</span></div><div class="bar-wrap"><div class="bar-fill" style="width:81%;background:#1B2E5E"></div></div></div>
+            <div class="progress-row"><div class="prog-header"><span>4ªB Liceo Scientifico</span><span>7.6</span></div><div class="bar-wrap"><div class="bar-fill" style="width:76%;background:#1B2E5E"></div></div></div>
+            <div class="progress-row"><div class="prog-header"><span>3ªA Liceo Scientifico</span><span>7.2</span></div><div class="bar-wrap"><div class="bar-fill" style="width:72%;background:#1B2E5E"></div></div></div>
+            <div class="progress-row"><div class="prog-header"><span>2ªC Scuola Media</span><span>7.0</span></div><div class="bar-wrap"><div class="bar-fill" style="width:70%;background:#BA7517"></div></div></div>
+            <div class="progress-row"><div class="prog-header"><span>1ªB Scuola Media</span><span>6.8</span></div><div class="bar-wrap"><div class="bar-fill" style="width:68%;background:#BA7517"></div></div></div>
+          </div>
+        </div>
+        <div class="rettore-card">
+          <div class="card-title"><i class="ti ti-chart-pie" aria-hidden="true"></i> Presenze istituto — giugno 2026</div>
+          <div class="presenze-summary">
+            <div class="ps-item" style="background:#EAF3DE"><div class="ps-label" style="color:#3B6D11">Presenti oggi</div><div class="ps-val" style="color:#3B6D11">462</div><div class="ps-pct" style="color:#3B6D11">94.9%</div></div>
+            <div class="ps-item" style="background:#FCEBEB"><div class="ps-label" style="color:#A32D2D">Assenti oggi</div><div class="ps-val" style="color:#A32D2D">25</div><div class="ps-pct" style="color:#A32D2D">5.1%</div></div>
+            <div class="ps-item" style="background:#FAEEDA"><div class="ps-label" style="color:#854F0B">Ritardi mese</div><div class="ps-val" style="color:#854F0B">41</div><div class="ps-pct" style="color:#854F0B">—</div></div>
+            <div class="ps-item" style="background:#E6F1FB"><div class="ps-label" style="color:#185FA5">Giustifiche pend.</div><div class="ps-val" style="color:#185FA5">8</div><div class="ps-pct" style="color:#185FA5">—</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>          <div class="stat-card"><div class="stat-label">Media generale</div><div class="stat-value">7.8</div><div class="stat-sub">+0.3 rispetto a ottobre</div></div>
           <div class="stat-card"><div class="stat-label">Assenze</div><div class="stat-value">4</div><div class="stat-sub">3 giustificate</div></div>
           <div class="stat-card"><div class="stat-label">Compiti in scadenza</div><div class="stat-value">3</div><div class="stat-sub">1 entro domani</div></div>
           <div class="stat-card"><div class="stat-label">Voti questo mese</div><div class="stat-value">9</div><div class="stat-sub">5 materie valutate</div></div>
