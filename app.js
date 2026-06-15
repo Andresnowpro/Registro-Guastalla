@@ -99,6 +99,89 @@ function buildCalendar() {
   }
 }
 
+// ── Dati modal rettore ─────────────────────────────────────────
+const MODAL_DATA = {
+  assenti: {
+    title: 'Assenti oggi — 15 giu 2026',
+    color: '#FCEBEB', textColor: '#A32D2D',
+    items: [
+      { ini: 'MR', nome: 'Rossi Marco',     sub: '3ªA Liceo Scientifico',  badge: 'Non giustificata', bc: '#FCEBEB', tc: '#A32D2D' },
+      { ini: 'LF', nome: 'Ferrari Laura',   sub: '3ªA Liceo Scientifico',  badge: 'Non giustificata', bc: '#FCEBEB', tc: '#A32D2D' },
+      { ini: 'GP', nome: 'Pelli Giulia',    sub: '4ªB Liceo Scientifico',  badge: 'Giustificata',     bc: '#EAF3DE', tc: '#3B6D11' },
+      { ini: 'AC', nome: 'Conti Andrea',    sub: '4ªB Liceo Scientifico',  badge: 'Giustificata',     bc: '#EAF3DE', tc: '#3B6D11' },
+      { ini: 'SB', nome: 'Basso Sofia',     sub: '5ªA Liceo Scientifico',  badge: 'Non giustificata', bc: '#FCEBEB', tc: '#A32D2D' },
+      { ini: 'TR', nome: 'Riva Tommaso',    sub: '2ªC Scuola Media',       badge: 'Giustificata',     bc: '#EAF3DE', tc: '#3B6D11' },
+      { ini: 'EN', nome: 'Neri Elisa',      sub: '2ªC Scuola Media',       badge: 'Non giustificata', bc: '#FCEBEB', tc: '#A32D2D' },
+      { ini: 'PM', nome: 'Manzoni Pietro',  sub: '1ªB Scuola Media',       badge: 'Giustificata',     bc: '#EAF3DE', tc: '#3B6D11' },
+    ]
+  },
+  presenti: {
+    title: 'Presenti oggi — 15 giu 2026',
+    color: '#EAF3DE', textColor: '#3B6D11',
+    items: [
+      { ini: 'AB', nome: 'Basso Andrea',    sub: '3ªA Liceo Scientifico',  badge: 'Presente', bc: '#EAF3DE', tc: '#3B6D11' },
+      { ini: 'CM', nome: 'Conti Martina',   sub: '3ªA Liceo Scientifico',  badge: 'Presente', bc: '#EAF3DE', tc: '#3B6D11' },
+      { ini: 'DS', nome: 'De Luca Sara',    sub: '3ªA Liceo Scientifico',  badge: 'Presente', bc: '#EAF3DE', tc: '#3B6D11' },
+      { ini: 'FL', nome: 'Ferrari Luca',    sub: '4ªB Liceo Scientifico',  badge: 'Presente', bc: '#EAF3DE', tc: '#3B6D11' },
+      { ini: 'PG', nome: 'Greco Paolo',     sub: '4ªB Liceo Scientifico',  badge: 'Presente', bc: '#EAF3DE', tc: '#3B6D11' },
+      { ini: 'LR', nome: 'Lombardi Rosa',   sub: '5ªA Liceo Scientifico',  badge: 'Presente', bc: '#EAF3DE', tc: '#3B6D11' },
+      { ini: 'GN', nome: 'Neri Giorgia',    sub: '5ªA Liceo Scientifico',  badge: 'Presente', bc: '#EAF3DE', tc: '#3B6D11' },
+      { ini: 'VS', nome: 'Serra Valeria',   sub: '2ªC Scuola Media',       badge: 'Presente', bc: '#EAF3DE', tc: '#3B6D11' },
+    ]
+  },
+  ritardi: {
+    title: 'Ritardi — giugno 2026',
+    color: '#FAEEDA', textColor: '#854F0B',
+    items: [
+      { ini: 'MR', nome: 'Rossi Marco',     sub: '3ªA · 28 mag, 1ª ora',   badge: '2 ritardi',  bc: '#FAEEDA', tc: '#854F0B' },
+      { ini: 'GP', nome: 'Pelli Giulia',    sub: '4ªB · 5 giu, 2ª ora',    badge: '1 ritardo',  bc: '#FAEEDA', tc: '#854F0B' },
+      { ini: 'AC', nome: 'Conti Andrea',    sub: '4ªB · 10 giu, 1ª ora',   badge: '1 ritardo',  bc: '#FAEEDA', tc: '#854F0B' },
+      { ini: 'SB', nome: 'Basso Sofia',     sub: '5ªA · 3 giu, 1ª ora',    badge: '3 ritardi',  bc: '#FAEEDA', tc: '#854F0B' },
+      { ini: 'TR', nome: 'Riva Tommaso',    sub: '2ªC · 12 giu, 1ª ora',   badge: '1 ritardo',  bc: '#FAEEDA', tc: '#854F0B' },
+    ]
+  },
+  giustifiche: {
+    title: 'Giustifiche in attesa',
+    color: '#E6F1FB', textColor: '#185FA5',
+    items: [
+      { ini: 'MR', nome: 'Rossi Marco',     sub: '3ªA · Assenza 2 mag',    badge: 'In attesa',  bc: '#E6F1FB', tc: '#185FA5' },
+      { ini: 'LF', nome: 'Ferrari Laura',   sub: '3ªA · Assenza 15 giu',   badge: 'In attesa',  bc: '#E6F1FB', tc: '#185FA5' },
+      { ini: 'SB', nome: 'Basso Sofia',     sub: '5ªA · Assenza 10 giu',   badge: 'In attesa',  bc: '#E6F1FB', tc: '#185FA5' },
+      { ini: 'EN', nome: 'Neri Elisa',      sub: '2ªC · Assenza 8 giu',    badge: 'In attesa',  bc: '#E6F1FB', tc: '#185FA5' },
+    ]
+  }
+};
+
+function openModal(type) {
+  const data = MODAL_DATA[type];
+  if (!data) return;
+
+  document.getElementById('modal-title').textContent = data.title;
+
+  const body = document.getElementById('modal-body');
+  body.innerHTML = data.items.map(it => `
+    <div class="modal-row">
+      <div class="modal-avatar" style="background:${it.bc};color:${it.tc}">${it.ini}</div>
+      <div class="modal-info">
+        <div class="modal-nome">${it.nome}</div>
+        <div class="modal-sub">${it.sub}</div>
+      </div>
+      <div class="modal-badge" style="background:${it.bc};color:${it.tc}">${it.badge}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('modal-overlay').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+// Chiudi modal con tasto Esc
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
 // ── Registro presenze (vista Docente) ──────────────────────────
 function buildPresenze() {
   const grid = document.getElementById('presenze-grid');

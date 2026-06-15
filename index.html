@@ -236,10 +236,21 @@
         <div class="rettore-card">
           <div class="card-title"><i class="ti ti-chart-pie" aria-hidden="true"></i> Presenze istituto — giugno 2026</div>
           <div class="presenze-summary">
-            <div class="ps-item" style="background:#EAF3DE"><div class="ps-label" style="color:#3B6D11">Presenti oggi</div><div class="ps-val" style="color:#3B6D11">462</div><div class="ps-pct" style="color:#3B6D11">94.9%</div></div>
-            <div class="ps-item" style="background:#FCEBEB"><div class="ps-label" style="color:#A32D2D">Assenti oggi</div><div class="ps-val" style="color:#A32D2D">25</div><div class="ps-pct" style="color:#A32D2D">5.1%</div></div>
-            <div class="ps-item" style="background:#FAEEDA"><div class="ps-label" style="color:#854F0B">Ritardi mese</div><div class="ps-val" style="color:#854F0B">41</div><div class="ps-pct" style="color:#854F0B">—</div></div>
-            <div class="ps-item" style="background:#E6F1FB"><div class="ps-label" style="color:#185FA5">Giustifiche pend.</div><div class="ps-val" style="color:#185FA5">8</div><div class="ps-pct" style="color:#185FA5">—</div></div>
+            <div class="ps-item ps-clickable" style="background:#EAF3DE" onclick="openModal('presenti')"><div class="ps-label" style="color:#3B6D11">Presenti oggi</div><div class="ps-val" style="color:#3B6D11">462</div><div class="ps-pct" style="color:#3B6D11">94.9% <i class="ti ti-chevron-right" style="font-size:11px"></i></div></div>
+            <div class="ps-item ps-clickable" style="background:#FCEBEB" onclick="openModal('assenti')"><div class="ps-label" style="color:#A32D2D">Assenti oggi</div><div class="ps-val" style="color:#A32D2D">25</div><div class="ps-pct" style="color:#A32D2D">5.1% <i class="ti ti-chevron-right" style="font-size:11px"></i></div></div>
+            <div class="ps-item ps-clickable" style="background:#FAEEDA" onclick="openModal('ritardi')"><div class="ps-label" style="color:#854F0B">Ritardi mese</div><div class="ps-val" style="color:#854F0B">41</div><div class="ps-pct" style="color:#854F0B">vedi lista <i class="ti ti-chevron-right" style="font-size:11px"></i></div></div>
+            <div class="ps-item ps-clickable" style="background:#E6F1FB" onclick="openModal('giustifiche')"><div class="ps-label" style="color:#185FA5">Giustifiche pend.</div><div class="ps-val" style="color:#185FA5">8</div><div class="ps-pct" style="color:#185FA5">vedi lista <i class="ti ti-chevron-right" style="font-size:11px"></i></div></div>
+          </div>
+        </div>
+
+        <!-- MODAL DETTAGLIO -->
+        <div id="modal-overlay" class="modal-overlay" onclick="closeModal()" style="display:none">
+          <div class="modal-box" onclick="event.stopPropagation()">
+            <div class="modal-header">
+              <span id="modal-title" class="modal-title"></span>
+              <button class="modal-close" onclick="closeModal()"><i class="ti ti-x"></i></button>
+            </div>
+            <div id="modal-body" class="modal-body"></div>
           </div>
         </div>
       </div>
